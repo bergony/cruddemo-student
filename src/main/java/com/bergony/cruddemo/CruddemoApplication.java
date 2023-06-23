@@ -20,16 +20,20 @@ public class CruddemoApplication {
     public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
         return runner -> {
             //	create(studentDAO);
-            //	createMultipleStudents(studentDAO);
+
+            	createMultipleStudents(studentDAO);
+
             //	readStudent(studentDAO);
+
             //	queryForStudents(studentDAO);
+
             //	queryForStudentsByLastName(studentDAO);
 
             //	updateStudent(studentDAO);
 
             // deleteStudent(studentDAO);
 
-            deleteAll(studentDAO);
+            // deleteAll(studentDAO);
         };
     }
 
@@ -68,9 +72,7 @@ public class CruddemoApplication {
 
         List<Student> studentList = studentDAO.findByLastName("Duck");
 
-        studentList.forEach(s -> {
-            System.out.println(s);
-        });
+        studentList.forEach(System.out::println);
     }
 
 
@@ -78,9 +80,7 @@ public class CruddemoApplication {
 
         List<Student> studentList = studentDAO.findAll();
 
-        studentList.forEach(s -> {
-            System.out.println(s);
-        });
+        studentList.forEach(System.out::println);
     }
 
     private void readStudent(StudentDAO studentDAO) {
