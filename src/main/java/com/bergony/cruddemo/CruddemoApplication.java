@@ -12,98 +12,114 @@ import java.util.List;
 @SpringBootApplication
 public class CruddemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CruddemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CruddemoApplication.class, args);
+    }
 
-	@Bean
-	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
-		return runner -> {
-		//	create(studentDAO);
-		//	createMultipleStudents(studentDAO);
-		//	readStudent(studentDAO);
-		//	queryForStudents(studentDAO);
-		//	queryForStudentsByLastName(studentDAO);
-			
-			updateStudent(studentDAO);
-		};
-	}
+    @Bean
+    public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
+        return runner -> {
+            //	create(studentDAO);
+            //	createMultipleStudents(studentDAO);
+            //	readStudent(studentDAO);
+            //	queryForStudents(studentDAO);
+            //	queryForStudentsByLastName(studentDAO);
 
-	private void updateStudent(StudentDAO studentDAO) {
+            //	updateStudent(studentDAO);
 
-		int studentId =1 ;
-		System.out.println("Getting student with id: "+studentId);
+            // deleteStudent(studentDAO);
 
-		Student student = studentDAO.findById(studentId);
-		System.out.println("Updating student... ");
+            deleteAll(studentDAO);
+        };
+    }
 
-		student.setFirstName("Apoolo");
-		student.setEmail("Apoolo@gmail.com");
+    private void deleteAll(StudentDAO studentDAO) {
+        int numeroDeleted = studentDAO.deleteAll();
+        System.out.println("Deleted row count: "+ numeroDeleted);
+    }
 
-		studentDAO.update(student);
+    private void deleteStudent(StudentDAO studentDAO) {
 
-		System.out.println("Updated Student:  "+student);
+        int studendId = 5;
+        System.out.println("Deleting student id: " + studendId);
+        studentDAO.delete(studendId);
+
+    }
+
+    private void updateStudent(StudentDAO studentDAO) {
+
+        int studentId = 1;
+        System.out.println("Getting student with id: " + studentId);
+
+        Student student = studentDAO.findById(studentId);
+        System.out.println("Updating student... ");
+
+        student.setFirstName("Apoolo");
+        student.setEmail("Apoolo@gmail.com");
+
+        studentDAO.update(student);
+
+        System.out.println("Updated Student:  " + student);
 
 
+    }
 
-	}
+    private void queryForStudentsByLastName(StudentDAO studentDAO) {
 
-	private void queryForStudentsByLastName(StudentDAO studentDAO) {
+        List<Student> studentList = studentDAO.findByLastName("Duck");
 
-		List<Student> studentList = studentDAO.findByLastName("Duck");
-
-		studentList.forEach( s -> {
-			System.out.println(s);
-		});
-	}
+        studentList.forEach(s -> {
+            System.out.println(s);
+        });
+    }
 
 
-	private void queryForStudents(StudentDAO studentDAO) {
+    private void queryForStudents(StudentDAO studentDAO) {
 
-		List<Student> studentList = studentDAO.findAll();
+        List<Student> studentList = studentDAO.findAll();
 
-		studentList.forEach( s -> {
-			System.out.println(s);
-		});
-	}
+        studentList.forEach(s -> {
+            System.out.println(s);
+        });
+    }
 
-	private void readStudent(StudentDAO studentDAO) {
-		System.out.println("Creating new student objetc...");
-		Student student = new Student("Daffy", "Duck", "Daffy@gmail.com");
+    private void readStudent(StudentDAO studentDAO) {
+        System.out.println("Creating new student objetc...");
+        Student student = new Student("Daffy", "Duck", "Daffy@gmail.com");
 
-		System.out.println("Saving the Student ...");
-		studentDAO.save(student);
+        System.out.println("Saving the Student ...");
+        studentDAO.save(student);
 
-		System.out.println("Saved student, Generated-id "+ student.getId());
+        System.out.println("Saved student, Generated-id " + student.getId());
 
-		System.out.println("Retrieving student with id: "+ student.getId());
+        System.out.println("Retrieving student with id: " + student.getId());
 
-		Student student1 = studentDAO.findById(student.getId());
-		System.out.println("Found the Student: "+ student1);
-	}
+        Student student1 = studentDAO.findById(student.getId());
+        System.out.println("Found the Student: " + student1);
+    }
 
-	private void createMultipleStudents(StudentDAO studentDAO) {
-		System.out.println("Creating 3 student objetc...");
-		Student student1 = new Student("bergony", "bandeira", "bergony@gmail.com");
-		Student student2 = new Student("Jessica", "bandeira", "Jessica@gmail.com");
-		Student student3 = new Student("Thrall", "bandeira", "Thrall@gmail.com");
+    private void createMultipleStudents(StudentDAO studentDAO) {
+        System.out.println("Creating 3 student objetc...");
+        Student student1 = new Student("bergony", "bandeira", "bergony@gmail.com");
+        Student student2 = new Student("Jessica", "bandeira", "Jessica@gmail.com");
+        Student student3 = new Student("Thrall", "bandeira", "Thrall@gmail.com");
 
-		System.out.println("Saving the Student ...");
-		studentDAO.save(student1);
-		studentDAO.save(student2);
-		studentDAO.save(student3);
+        System.out.println("Saving the Student ...");
+        studentDAO.save(student1);
+        studentDAO.save(student2);
+        studentDAO.save(student3);
 
-	}
+    }
 
-	private void create(StudentDAO studentDAO) {
+    private void create(StudentDAO studentDAO) {
 
-		System.out.println("Creating new student objetc...");
-		Student student = new Student("bergony", "bandeira", "bergony@gmail.com");
+        System.out.println("Creating new student objetc...");
+        Student student = new Student("bergony", "bandeira", "bergony@gmail.com");
 
-		System.out.println("Saving the Student ...");
-		studentDAO.save(student);
+        System.out.println("Saving the Student ...");
+        studentDAO.save(student);
 
-		System.out.println("Saved student, Generated-id"+ student.getId());
+        System.out.println("Saved student, Generated-id" + student.getId());
 
-	}
+    }
 }
